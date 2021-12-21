@@ -1,0 +1,52 @@
+2021-11-03 15:35:39 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\Users\caue_\Desktop\pubsub\node_modules\node-windows\lib\wrapper.js --file C:\Users\caue_\Desktop\pubsub\dist\index.js --scriptoptions= --log "Gescondo PubSub application as Windows Service wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2021-11-03 15:35:40 - Started 1256
+2021-11-03 15:44:04 - Stopping gescondopubsubapplicationaswindowsservice.exe
+2021-11-03 15:44:04 - ProcessKill 1256
+2021-11-03 15:44:05 - Found child process: 15720 Name: conhost.exe
+2021-11-03 15:44:05 - Found child process: 1596 Name: node.exe
+2021-11-03 15:44:05 - Stopping process 15720
+2021-11-03 15:44:05 - Send SIGINT 15720
+2021-11-03 15:44:05 - SIGINT to 15720 failed - Killing as fallback
+2021-11-03 15:44:05 - Stopping process 1596
+2021-11-03 15:44:05 - Send SIGINT 1596
+2021-11-03 15:44:05 - SIGINT to 1596 failed - Killing as fallback
+2021-11-03 15:44:05 - Stopping process 1256
+2021-11-03 15:44:05 - Send SIGINT 1256
+2021-11-03 15:44:05 - SIGINT to 1256 failed - Killing as fallback
+2021-11-03 15:44:05 - Finished gescondopubsubapplicationaswindowsservice.exe
+2021-11-03 15:44:06 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\Users\caue_\Desktop\pubsub\node_modules\node-windows\lib\wrapper.js --file C:\Users\caue_\Desktop\pubsub\dist\index.js --scriptoptions= --log "Gescondo PubSub application as Windows Service wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2021-11-03 15:44:06 - Started 6584
+2021-11-03 15:44:28 - Stopping gescondopubsubapplicationaswindowsservice.exe
+2021-11-03 15:44:28 - ProcessKill 6584
+2021-11-03 15:44:28 - Found child process: 9508 Name: conhost.exe
+2021-11-03 15:44:28 - Found child process: 11052 Name: node.exe
+2021-11-03 15:44:29 - Stopping process 9508
+2021-11-03 15:44:29 - Send SIGINT 9508
+2021-11-03 15:44:29 - SIGINT to 9508 failed - Killing as fallback
+2021-11-03 15:44:29 - Stopping process 11052
+2021-11-03 15:44:29 - Send SIGINT 11052
+2021-11-03 15:44:29 - SIGINT to 11052 failed - Killing as fallback
+2021-11-03 15:44:29 - Stopping process 6584
+2021-11-03 15:44:29 - Send SIGINT 6584
+2021-11-03 15:44:29 - SIGINT to 6584 failed - Killing as fallback
+2021-11-03 15:44:29 - Finished gescondopubsubapplicationaswindowsservice.exe
+2021-11-03 15:44:30 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\Users\caue_\Desktop\pubsub\node_modules\node-windows\lib\wrapper.js --file C:\Users\caue_\Desktop\pubsub\dist\index.js --scriptoptions= --log "Gescondo PubSub application as Windows Service wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2021-11-03 15:44:30 - Started 17112
+2021-11-04 09:17:46 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\Users\caue_\Desktop\pubsub\node_modules\node-windows\lib\wrapper.js --file C:\Users\caue_\Desktop\pubsub\dist\index.js --scriptoptions= --log "Gescondo PubSub application as Windows Service wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2021-11-04 09:17:46 - Started 6600
+2021-11-04 11:29:20 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\Users\caue_\Desktop\pubsub\node_modules\node-windows\lib\wrapper.js --file C:\Users\caue_\Desktop\pubsub\dist\index.js --scriptoptions= --log "Gescondo PubSub application as Windows Service wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2021-11-04 11:29:20 - Started 4384
+2021-11-04 12:15:49 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\Users\caue_\Desktop\pubsub\node_modules\node-windows\lib\wrapper.js --file C:\Users\caue_\Desktop\pubsub\dist\index.js --scriptoptions= --log "Gescondo PubSub application as Windows Service wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2021-11-04 12:15:49 - Started 5132
+2021-11-04 12:16:36 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\Users\caue_\Desktop\pubsub\node_modules\node-windows\lib\wrapper.js --file C:\Users\caue_\Desktop\pubsub\dist\index.js --scriptoptions= --log "Gescondo PubSub application as Windows Service wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2021-11-04 12:16:36 - Started 5916
+2021-11-04 14:01:13 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\Users\caue_\Desktop\pubsub\node_modules\node-windows\lib\wrapper.js --file C:\Users\caue_\Desktop\pubsub\dist\index.js --scriptoptions= --log "Gescondo PubSub application as Windows Service wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2021-11-04 14:01:14 - Started 6148
+2021-11-08 06:59:24 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\Users\caue_\Desktop\pubsub\node_modules\node-windows\lib\wrapper.js --file C:\Users\caue_\Desktop\pubsub\dist\index.js --scriptoptions= --log "Gescondo PubSub application as Windows Service wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2021-11-08 06:59:24 - Started 6088
+2021-11-08 13:52:06 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\Users\caue_\Desktop\pubsub\node_modules\node-windows\lib\wrapper.js --file C:\Users\caue_\Desktop\pubsub\dist\index.js --scriptoptions= --log "Gescondo PubSub application as Windows Service wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2021-11-08 13:52:07 - Started 9832
+2021-11-10 09:06:12 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\Users\caue_\Desktop\pubsub\node_modules\node-windows\lib\wrapper.js --file C:\Users\caue_\Desktop\pubsub\dist\index.js --scriptoptions= --log "Gescondo PubSub application as Windows Service wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2021-11-10 09:06:12 - Started 2728
+2021-11-10 16:14:17 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\Users\caue_\Desktop\pubsub\node_modules\node-windows\lib\wrapper.js --file C:\Users\caue_\Desktop\pubsub\dist\index.js --scriptoptions= --log "Gescondo PubSub application as Windows Service wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2021-11-10 16:14:17 - Started 13100

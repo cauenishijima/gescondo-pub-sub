@@ -1,0 +1,898 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model administradora {
+  id                   Int      @id @default(autoincrement())
+  cnpj                 String?  @unique(map: "cnpj_UNIQUE") @db.VarChar(14)
+  nome                 String?  @db.VarChar(75)
+  cep                  String?  @db.VarChar(8)
+  endereco             String?  @db.VarChar(45)
+  numero               String?  @db.VarChar(45)
+  municipio            String?  @db.VarChar(45)
+  uf                   String?  @db.VarChar(2)
+  creci                String?  @db.VarChar(45)
+  adibas               String?  @db.VarChar(45)
+  lista_atrasado       Int?
+  titulo_demonstrativo String?  @db.VarChar(75)
+  logo                 Bytes?
+  email                String?  @db.VarChar(256)
+  site                 String?  @db.VarChar(256)
+  inscricao_municipal  String?  @db.VarChar(15)
+  telefone             String?  @db.VarChar(10)
+  porcentJuros         Decimal? @db.Decimal(18, 2)
+  porcentMulta         Decimal? @db.Decimal(18, 2)
+  qtdDiasLimitePgto    Int?
+}
+
+model agencias {
+  id          Int     @id @default(autoincrement())
+  banco       Int
+  agencia     Int
+  digito      String  @db.Char(1)
+  nome        String? @db.VarChar(75)
+  endereco    String? @db.VarChar(75)
+  numero      String? @db.VarChar(45)
+  complemento String? @db.VarChar(75)
+  bairro      String? @db.VarChar(45)
+  cep         String? @db.VarChar(45)
+  uf          String? @db.VarChar(2)
+  telefone    String? @db.VarChar(12)
+}
+
+model agenda_telefonica {
+  id         Int     @id @default(autoincrement())
+  nome       String? @db.VarChar(45)
+  telefone   String? @db.VarChar(10)
+  celular    String? @db.VarChar(11)
+  email      String? @db.VarChar(75)
+  contato    String? @db.VarChar(45)
+  observacao String? @db.Text
+}
+
+model bancos {
+  id              Int     @id @default(autoincrement())
+  codigo          Int
+  cnpj            String? @db.VarChar(20)
+  nome            String  @db.VarChar(75)
+  local_pagamento String? @db.VarChar(128)
+}
+
+model boletos {
+  id                    Int            @id @default(autoincrement())
+  predio                Int?
+  unidade               String?        @db.VarChar(45)
+  nome_sacado           String?        @db.VarChar(75)
+  data                  DateTime?      @db.Date
+  vencto                DateTime?      @db.Date
+  numero_documento      String?        @db.VarChar(45)
+  nosso_numero          String?        @db.VarChar(45)
+  carteira              String?        @db.VarChar(45)
+  codigo_cedente        String?        @db.VarChar(45)
+  banco                 Int?
+  agencia               Int?
+  digito_agencia        Int?
+  conta                 Int?
+  digito_conta          String?        @db.VarChar(1)
+  valor                 Decimal?       @db.Decimal(18, 2)
+  acrescimo             Decimal?       @default(0.00) @db.Decimal(18, 2)
+  correcao              Decimal?       @default(0.00) @db.Decimal(18, 2)
+  juros                 Decimal?       @default(0.00) @db.Decimal(18, 2)
+  multa                 Decimal?       @default(0.00) @db.Decimal(18, 2)
+  data_quitacao         DateTime?      @db.Date
+  valor_quitacao        Decimal?       @db.Decimal(18, 2)
+  cpf_sacado            String?        @db.VarChar(14)
+  endereco_sacado       String?        @db.VarChar(75)
+  numero_sacado         String?        @db.VarChar(45)
+  uf_sacado             String?        @db.VarChar(2)
+  cep_sacado            String?        @db.VarChar(9)
+  municipio_sacado      String?        @db.VarChar(75)
+  bairro_sacado         String?        @db.VarChar(75)
+  local_pagamento       String?        @db.VarChar(45)
+  mensagem              String?        @db.VarChar(256)
+  mes_referencia        Int?
+  ano_referencia        Int?
+  seu_numero            String?        @db.VarChar(45)
+  fone_sacado           String?        @db.VarChar(11)
+  email_sacado          String?        @db.VarChar(75)
+  data_limite_pagamento DateTime?      @db.Date
+  avalista              String?        @db.VarChar(75)
+  cobrarDe              String?        @db.VarChar(45)
+  idMorador             Int?
+  percentMulta          Decimal?       @db.Decimal(18, 2)
+  diasLimitePgto        Int?
+  status                boletos_status @default(PENDENTE)
+  data_processamento    DateTime?      @db.Date
+  taxa_cobranca         Decimal?       @default(0.00) @db.Decimal(18, 2)
+  juros_recebido        Decimal?       @default(0.00) @db.Decimal(18, 2)
+  sacado_avalista       String?        @db.VarChar(75)
+  complemento_sacado    String?        @db.VarChar(75)
+  mensagem2             String?        @db.VarChar(1024)
+  avulso                String         @default("N") @db.Char(1)
+}
+
+model calendario_catalogos {
+  id   Int    @id @default(autoincrement())
+  nome String @unique(map: "nome_UNIQUE") @db.VarChar(45)
+  cor  String @unique(map: "cor_UNIQUE") @db.VarChar(10)
+}
+
+model calendario_compromissos {
+  id                       String                     @id @db.VarChar(45)
+  assunto                  String                     @db.VarChar(75)
+  descricao                String?                    @db.VarChar(256)
+  data                     DateTime                   @db.Date
+  horaInicio               DateTime                   @db.Time(0)
+  horaFim                  DateTime                   @db.Time(0)
+  criador                  Int
+  privado                  String                     @default("N") @db.Char(1)
+  catalogo                 Int
+  idCompromisso            Int                        @unique(map: "idCompromisso_UNIQUE") @default(autoincrement())
+  idGrupo                  Int
+  calendario_participantes calendario_participantes[]
+}
+
+model calendario_participantes {
+  idCompromisso           String                  @db.VarChar(45)
+  idExecutor              Int
+  alarmEnabled            String                  @default("S") @db.Char(1)
+  alarmAdvance            Int                     @default(5)
+  calendario_compromissos calendario_compromissos @relation(fields: [idCompromisso], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_compromisso")
+
+  @@id([idCompromisso, idExecutor])
+  @@index([idCompromisso], map: "fk_compromisso_idx")
+}
+
+model cheques_emitidos {
+  id                  Int       @unique(map: "id_UNIQUE") @default(autoincrement())
+  predio              Int
+  conta_bancaria      Int
+  num_cheque          String    @db.VarChar(45)
+  valor               Decimal?  @db.Decimal(18, 2)
+  cidade              String?   @db.VarChar(45)
+  data                DateTime? @db.Date
+  cancelado           String?   @default("N") @db.Char(1)
+  observacao          String?   @db.LongText
+  nominal             String?   @db.VarChar(75)
+  vencimento          DateTime? @db.Date
+  forma_de_pagamento  Int?
+  data_envio_predio   DateTime? @db.Date
+  data_retorno_predio DateTime? @db.Date
+
+  @@id([predio, conta_bancaria, num_cheque])
+  @@index([predio, conta_bancaria, vencimento], map: "idxCheque")
+  @@index([conta_bancaria], map: "idxContaBancaria")
+  @@index([predio], map: "idxPredio")
+  @@index([predio, conta_bancaria, num_cheque, data_retorno_predio], map: "idxPrincipal")
+}
+
+model config_diferenca_rateio {
+  predio       Int     @id @unique(map: "predio_UNIQUE")
+  contaDespesa Int
+  grupoRateio  Int?
+  historico    String? @db.VarChar(256)
+}
+
+model consumo_minimo_agua {
+  ano   Int
+  mes   Int
+  valor Decimal? @db.Decimal(18, 2)
+
+  @@id([ano, mes])
+}
+
+model contas_bancarias {
+  id                Int     @id @default(autoincrement())
+  predio            Int
+  banco             Int
+  agencia           Int
+  conta             String  @db.VarChar(45)
+  agencia_digito    String? @db.VarChar(2)
+  digito            String? @db.VarChar(2)
+  principal         String? @db.Char(1)
+  fundo_reserva     String? @db.Char(1)
+  fundo_obra        String? @db.Char(1)
+  descricao         String? @db.VarChar(75)
+  saldo_inicial     Decimal @default(0.00) @db.Decimal(18, 2)
+  conta_planoContas Int?
+  nosso_numero      BigInt?
+  codigo_cedente    String? @db.VarChar(12)
+  carteira          String? @db.VarChar(8)
+  numero_remessa    Int?
+
+  @@index([predio, principal], map: "idxPrincipal")
+}
+
+model controle_efdreinf {
+  id                         Int                         @id @default(autoincrement())
+  predio                     Int?
+  mes                        Int?
+  ano                        Int?
+  protocolo                  String?                     @db.VarChar(45)
+  metodo                     controle_efdreinf_metodo?
+  registro                   String?                     @db.VarChar(6)
+  idUsuario                  Int?
+  dataHoraEnvio              DateTime?                   @db.DateTime(0)
+  milissegundos              Int?                        @default(0)
+  cdResposta_envio           Int?
+  descResposta_envio         String?                     @db.VarChar(45)
+  cdResposta_status          Int?
+  descResposta_status        String?                     @db.VarChar(45)
+  cdResposta_processamento   Int?
+  descResposta_processamento String?                     @db.VarChar(45)
+  recibo                     String?                     @db.VarChar(45)
+  ocorrencias                String?                     @db.LongText
+  xmlEnvio                   Bytes?
+  xmlRetornoEnvio            Bytes?
+  xmlRetornoConsulta         Bytes?
+  ambiente                   controle_efdreinf_ambiente?
+  mesFim                     Int?
+  anoFim                     Int?
+  controle_efdreinf_recibo   controle_efdreinf_recibo[]
+
+  @@index([ambiente], map: "idxAmbiente")
+  @@index([ano, mes], map: "idxData")
+  @@index([predio], map: "idxPredio")
+}
+
+model controle_efdreinf_recibo {
+  id                Int                                @id @default(autoincrement())
+  idEnvio           Int?
+  predio            Int?
+  fornecedor        Int?
+  mes               Int?
+  ano               Int?
+  evento            String?                            @db.VarChar(45)
+  recibo            String?                            @db.VarChar(45)
+  ambiente          controle_efdreinf_recibo_ambiente?
+  cdRetorno         String?                            @db.VarChar(45)
+  descRetorno       String?                            @db.VarChar(45)
+  regOcorrs         String?                            @db.LongText
+  dataHoraProc      DateTime?                          @db.DateTime(0)
+  milissegundos     Int?
+  idEv              String?                            @db.VarChar(45)
+  hash              String?                            @db.VarChar(45)
+  vlrTotalBaseRet   Decimal?                           @db.Decimal(18, 2)
+  vlrCRTom          Decimal?                           @db.Decimal(18, 2)
+  xmlEnvio          Bytes?
+  xmlRetornoEnvio   Bytes?
+  controle_efdreinf controle_efdreinf?                 @relation(fields: [idEnvio], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_controle")
+
+  @@index([idEnvio], map: "fk_controle_idx")
+}
+
+model despesa_x_cheque {
+  predio         Int
+  conta_bancaria Int
+  num_cheque     String @db.VarChar(45)
+  id_despesa     Int
+
+  @@id([predio, conta_bancaria, num_cheque, id_despesa])
+}
+
+model despesas_diretas {
+  id                 Int     @id @default(autoincrement())
+  predio             Int
+  mes                Int
+  ano                Int
+  idMorador          Int?
+  idGrupoTipoUnidade Int?
+  descricao          String  @db.VarChar(128)
+  valor              Decimal @db.Decimal(18, 2)
+}
+
+model formas_pagamento {
+  id              Int     @id @default(autoincrement())
+  nome            String  @db.VarChar(45)
+  descricao       String? @db.VarChar(256)
+  emite_recibo    String? @default("N") @db.Char(1)
+  bloqueia_cheque String? @default("N") @db.Char(1)
+}
+
+model fornecedores {
+  id         Int                      @default(autoincrement())
+  cnpj_cpf   String                   @db.VarChar(14)
+  nome       String?                  @db.VarChar(75)
+  telefone   String?                  @db.VarChar(10)
+  celular    String?                  @db.VarChar(11)
+  email      String?                  @db.VarChar(128)
+  cep        String?                  @db.VarChar(8)
+  endereco   String?                  @db.VarChar(45)
+  numero     String?                  @db.VarChar(45)
+  municipio  String?                  @db.VarChar(45)
+  uf         String?                  @db.VarChar(2)
+  pis        String?                  @db.VarChar(11)
+  tributacao fornecedores_tributacao?
+  bairro     String?                  @db.VarChar(45)
+  CPRB       String?                  @db.Char(1)
+
+  @@id([id, cnpj_cpf])
+}
+
+model fornecedores_x_despesas {
+  fornecedor    Int
+  conta_despesa Int
+  principal     String? @db.Char(1)
+
+  @@id([fornecedor, conta_despesa])
+}
+
+model fundos {
+  id           Int                 @id @default(autoincrement())
+  predio       Int
+  codigo       Int
+  nome         String              @db.VarChar(75)
+  tipo_calculo fundos_tipo_calculo
+  valor        Decimal?            @db.Decimal(18, 2)
+  numerador    Int?
+  denominador  Int?
+  ativo        String?             @default("S") @db.Char(1)
+  cobrarDe     fundos_cobrarDe?
+  ratearEntre  Int?
+  contaDespesa Int?
+  contaReceita Int?
+  historico    String?             @db.VarChar(256)
+  saldoInicial Decimal?            @db.Decimal(18, 2)
+}
+
+model grupos_usuarios {
+  id   Int     @id @default(autoincrement())
+  nome String? @unique(map: "nome_UNIQUE") @db.VarChar(75)
+}
+
+model historico_padrao {
+  codigo         Int    @id
+  descricao      String @db.VarChar(75)
+  conta_devedora Int?
+  conta_credora  Int?
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model information_tables {
+  Schema  String? @map("_Schema") @db.VarChar(75)
+  Table   String? @map("_Table") @db.VarChar(75)
+  Field   String? @map("_Field") @db.VarChar(75)
+  Type    String? @map("_Type") @db.VarChar(75)
+  Null    String? @map("_Null") @db.VarChar(3)
+  Default String? @map("_Default") @db.VarChar(75)
+  Extra   String? @map("_Extra") @db.VarChar(75)
+  Primary String? @map("_Primary") @db.VarChar(3)
+
+  @@ignore
+}
+
+model inss_periodos {
+  id                    Int      @id @default(autoincrement())
+  data_inicio_vigencia  DateTime @db.Date
+  salario_minimo        Decimal? @db.Decimal(18, 2)
+  porcent_inss_autonomo Decimal? @db.Decimal(18, 2)
+}
+
+model inss_salario_familia {
+  id           Int      @id @default(autoincrement())
+  id_periodo   Int
+  faixa_inicio Decimal? @db.Decimal(18, 2)
+  faixa_fim    Decimal? @db.Decimal(18, 2)
+  valor        Decimal? @db.Decimal(18, 2)
+}
+
+model inss_tabela {
+  id           Int      @id @default(autoincrement())
+  id_periodo   Int
+  faixa_inicio Decimal? @db.Decimal(18, 2)
+  faixa_fim    Decimal? @db.Decimal(18, 2)
+  aliquota     Decimal? @db.Decimal(18, 2)
+}
+
+model ir_periodos {
+  id                   Int       @id @default(autoincrement())
+  data_inicio_vigencia DateTime? @db.Date
+  valor_dependente     Decimal?  @db.Decimal(18, 2)
+  retencao_minima      Decimal?  @db.Decimal(18, 2)
+}
+
+model ir_tabela {
+  id              Int      @id @default(autoincrement())
+  id_periodo      Int
+  faixa_inicio    Decimal? @db.Decimal(18, 2)
+  faixa_fim       Decimal? @db.Decimal(18, 2)
+  aliquota        Decimal? @db.Decimal(18, 2)
+  parcela_deduzir Decimal? @db.Decimal(18, 2)
+}
+
+model ir_tabela_plr {
+  id              Int      @id @default(autoincrement())
+  id_periodo      Int
+  faixa_inicio    Decimal? @db.Decimal(18, 2)
+  faixa_fim       Decimal? @db.Decimal(18, 2)
+  aliquota        Decimal? @db.Decimal(18, 2)
+  parcela_deduzir Decimal? @db.Decimal(18, 2)
+}
+
+model lancamentos_cpr {
+  id                   Int                        @id @default(autoincrement())
+  codigo               Int?
+  predio               Int?
+  data                 DateTime?                  @db.Date
+  descricao            String?                    @db.VarChar(256)
+  conta                Int?                       @default(-1)
+  valor                Decimal?                   @db.Decimal(18, 2)
+  valor_total          Decimal?                   @db.Decimal(18, 2)
+  data_vencto          DateTime?                  @db.Date
+  data_baixa           DateTime?                  @db.Date
+  tipo_documento       Int?
+  documento            String?                    @db.VarChar(45)
+  historico            String?                    @db.VarChar(400)
+  cheque               String?                    @db.VarChar(45)
+  fornecedor           Int?
+  status               String?                    @db.VarChar(45)
+  idGrupo              Int?                       @default(0)
+  parcela_inicial      Int?                       @default(0)
+  parcela_final        Int?                       @default(0)
+  recorrente           String?                    @default("N") @db.Char(1)
+  idHeranca            Int?
+  forma_de_pagamento   Int?                       @default(-1)
+  observacao           String?                    @db.VarChar(256)
+  desconto             Decimal?                   @default(0.00) @db.Decimal(18, 2)
+  juros                Decimal?                   @default(0.00) @db.Decimal(18, 2)
+  aliquota_IRRF        Decimal?                   @db.Decimal(18, 2)
+  aliquota_INSS        Decimal?                   @db.Decimal(18, 2)
+  aliquota_ISS         Decimal?                   @db.Decimal(18, 2)
+  aliquota_PCC         Decimal?                   @db.Decimal(18, 2)
+  valor_IRRF           Decimal                    @default(0.00) @db.Decimal(18, 2)
+  valor_INSS           Decimal                    @default(0.00) @db.Decimal(18, 2)
+  valor_ISS            Decimal                    @default(0.00) @db.Decimal(18, 2)
+  valor_PCC            Decimal                    @default(0.00) @db.Decimal(18, 2)
+  lancamento_IRRF      Int?
+  lancamento_INSS      Int?
+  lancamento_ISS       Int?
+  lancamento_PCC       Int?
+  lancamento_Principal Int?
+  nomeRecebedor        String?                    @db.VarChar(128)
+  base_IRRF            Decimal?                   @db.Decimal(18, 2)
+  base_INSS            Decimal?                   @db.Decimal(18, 2)
+  base_ISS             Decimal?                   @db.Decimal(18, 2)
+  base_PCC             Decimal?                   @db.Decimal(18, 2)
+  ehServico            String?                    @db.Char(1)
+  tpServico            Int?
+  serie                String?                    @db.VarChar(5)
+  contaClassificacao   Int?
+  mesRateio            Int?
+  anoRateio            Int?
+  grupoRateio          Int?
+  lancadoEm            lancamentos_cpr_lancadoEm?
+  tipo                 lancamentos_cpr_tipo?      @default(D)
+  idUsuario_insercao   Int?
+  idUsuario_alteracao  Int?
+  data_insercao        DateTime?                  @db.DateTime(0)
+  data_alteracao       DateTime?                  @db.DateTime(0)
+
+  @@index([predio, data], map: "idxAno")
+  @@index([predio, conta, cheque], map: "idxCheque")
+  @@index([predio, contaClassificacao], map: "idxContaClassificacao")
+  @@index([lancamento_INSS], map: "idxLancamentoINSS")
+  @@index([lancamento_IRRF], map: "idxLancamentoIRRF")
+  @@index([lancamento_ISS], map: "idxLancamentoISS")
+  @@index([lancamento_PCC], map: "idxLancamentoPCC")
+  @@index([predio, data_vencto], map: "idxOnlyVencimento")
+  @@index([predio, data, data_baixa, data_vencto], map: "idxVencimento")
+}
+
+model leitura_agua {
+  predio           Int
+  idMorador        Int
+  mes              Int
+  ano              Int
+  leitura_anterior Decimal? @db.Decimal(18, 2)
+  leitura_atual    Decimal? @db.Decimal(18, 2)
+  consumoM3        Decimal? @db.Decimal(18, 2)
+  consumoCorrigido Decimal? @db.Decimal(18, 2)
+  valor            Decimal? @db.Decimal(18, 2)
+
+  @@id([predio, idMorador, mes, ano])
+}
+
+model leitura_gas {
+  predio           Int
+  idMorador        Int
+  mes              Int
+  ano              Int
+  leitura_anterior Decimal? @db.Decimal(18, 4)
+  leitura_atual    Decimal? @db.Decimal(18, 4)
+  consumoM3        Decimal? @db.Decimal(18, 3)
+  consumoKg        Decimal? @db.Decimal(18, 3)
+  valor            Decimal? @db.Decimal(18, 2)
+
+  @@id([predio, idMorador, mes, ano])
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model menu_personalizado {
+  usuario        Int
+  button_caption String? @db.VarChar(45)
+  img_index      Int?
+  button_name    String? @db.VarChar(45)
+
+  @@ignore
+}
+
+model modelos {
+  id       Int    @id @default(autoincrement())
+  nome     String @db.VarChar(45)
+  mensagem Bytes
+}
+
+model moradores {
+  codigo                  Int     @id @default(autoincrement())
+  predio                  Int?
+  num_apto                String? @db.VarChar(45)
+  cpf                     String? @db.VarChar(14)
+  nome                    String? @db.VarChar(45)
+  endereco                String? @db.VarChar(128)
+  numero                  String? @db.VarChar(10)
+  municipio               String? @db.VarChar(75)
+  bairro                  String? @db.VarChar(75)
+  uf                      String? @db.VarChar(2)
+  cep                     String? @db.VarChar(8)
+  celular                 String? @db.VarChar(11)
+  email                   String? @db.VarChar(75)
+  telefone                String? @db.VarChar(10)
+  tipo_unidade            Int?
+  correspondenciaNoPredio String? @db.Char(1)
+  vcto_condominio         Int?
+  vcto_fundo              Int?
+  porcent_agua            Float?
+  sacado_avalista         String? @db.VarChar(75)
+  proprietario            String? @db.Char(1)
+  endereco_prop           String? @db.VarChar(128)
+  municipio_prop          String? @db.VarChar(75)
+  numero_prop             String? @db.VarChar(10)
+  bairro_prop             String? @db.VarChar(75)
+  uf_prop                 String? @db.VarChar(2)
+  cep_prop                String? @db.VarChar(8)
+  cpf_prop                String? @db.VarChar(11)
+  nome_prop               String? @db.VarChar(45)
+  telefone_prop           String? @db.VarChar(10)
+  celular_prop            String? @db.VarChar(11)
+  email_prop              String? @db.VarChar(75)
+  complemento             String? @db.VarChar(75)
+  complemento_prop        String? @db.VarChar(75)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model parametrizacao {
+  aliquota_IRRF      Decimal? @db.Decimal(18, 2)
+  aliquota_INSS      Decimal? @db.Decimal(18, 2)
+  aliquota_ISS       Decimal? @db.Decimal(18, 2)
+  aliquota_PCC       Decimal? @db.Decimal(18, 2)
+  aliquota_INSS_CPRB Decimal? @db.Decimal(18, 2)
+
+  @@ignore
+}
+
+model permissoes {
+  grupo    Int
+  tela     Int
+  leitura  String? @default("S") @db.Char(1)
+  escrita  String? @default("S") @db.Char(1)
+  exclusao String? @default("S") @db.Char(1)
+
+  @@id([grupo, tela])
+}
+
+model plano_contas {
+  codigo            Int     @id
+  descricao         String? @db.VarChar(75)
+  base_condominio   String? @db.Char(1)
+  acumula_saldo_mes String? @db.Char(1)
+  acumula_saldo_ano String? @db.Char(1)
+  subCategoriaDe    Int?
+  historico         String? @db.VarChar(200)
+  codigoAgrupamento Int?
+  grupoRateio       Int?
+}
+
+model plano_fundo {
+  predio  Int
+  idPlano Int
+  idFundo Int
+
+  @@id([idPlano, idFundo, predio])
+}
+
+model plano_grupo_rateio {
+  predio        Int
+  idPlano       Int
+  idGrupoRateio Int
+
+  @@id([predio, idPlano, idGrupoRateio])
+}
+
+model predios {
+  id                    Int       @id @default(autoincrement())
+  codigo                Int?
+  cnpj                  String?   @db.VarChar(14)
+  nome                  String?   @db.VarChar(75)
+  cep                   String?   @db.VarChar(8)
+  endereco              String?   @db.VarChar(75)
+  numero                String?   @db.VarChar(10)
+  municipio             String?   @db.VarChar(45)
+  uf                    String?   @db.VarChar(2)
+  taxa_administrativa   Decimal?  @db.Decimal(18, 2)
+  quantidade_apto       Int?
+  pgto_fracao           String?   @db.Char(1)
+  sindico               String?   @db.VarChar(45)
+  zelador               String?   @db.VarChar(45)
+  conselheiro_um        String?   @db.VarChar(45)
+  conselheiro_dois      String?   @db.VarChar(45)
+  observacao            String?   @db.Text
+  mes_assembleia        Int?
+  vencto_extintores     DateTime? @db.Date
+  dia_fechamento_boleto Int?
+  telefone              String?   @db.VarChar(10)
+  email                 String?   @db.VarChar(128)
+  contato               String?   @db.VarChar(45)
+  celular               String?   @db.VarChar(11)
+  cpfCtt                String?   @db.VarChar(11)
+  classTrib             Int?
+  indEscrituracao       Int?
+  indDesoneracao        Int?
+  indACordoIsenMulta    Int?
+  indSitPJ              Int?
+  serialNumberCert      String?   @db.VarChar(45)
+  lancaDiferenca        String?   @default("N") @db.Char(1)
+  dataSaldoInicial      DateTime? @db.Date
+  vencimentoMesSeguinte String?   @default("S") @db.Char(1)
+  listarInadimplentes   String?   @default("N") @db.Char(1)
+
+  @@index([codigo], map: "idxPrincipal")
+}
+
+model rateios {
+  predio        Int
+  tipo_unidade  Int
+  mes           Int
+  ano           Int
+  condominio    Decimal? @db.Decimal(18, 2)
+  fundo_caixa   Decimal? @db.Decimal(18, 2)
+  fundo_reserva Decimal? @db.Decimal(18, 2)
+  manutencao    Decimal? @db.Decimal(18, 2)
+
+  @@id([predio, tipo_unidade, mes, ano])
+}
+
+model recibos {
+  id                Int       @id @default(autoincrement())
+  codigo_lancamento Int?
+  predio            Int?
+  num_recibo        Int?
+  data              DateTime? @db.Date
+  vencto            DateTime? @db.Date
+  historico         String?   @db.VarChar(128)
+  fornecedor        Int?
+  valor_bruto       Decimal?  @db.Decimal(18, 2)
+  valor_extenso     String?   @db.VarChar(128)
+  INSS              Decimal?  @db.Decimal(18, 2)
+  ISS               Decimal?  @db.Decimal(18, 2)
+  IRRF              Decimal?  @db.Decimal(18, 2)
+  mensagem          String?   @db.VarChar(256)
+  valor_liquido     Decimal?  @db.Decimal(18, 2)
+  nomeRecebedor     String?   @db.VarChar(128)
+  autonomo          String?   @default("N") @db.Char(1)
+  INSS_Empresa      Decimal?  @db.Decimal(18, 2)
+  aliquota_inss     Decimal?  @db.Decimal(18, 2)
+  dependentes       Int?
+  deduz_inss        String?   @db.Char(1)
+  inss_ja_deduzido  Decimal?  @db.Decimal(18, 2)
+  pensao            Decimal?  @db.Decimal(18, 2)
+}
+
+model saldos_iniciais {
+  predio Int
+  conta  Int
+  saldo  Decimal? @default(0.00) @db.Decimal(18, 2)
+
+  @@id([predio, conta])
+}
+
+model seguradoras {
+  predio       Int       @id
+  data_inicio  DateTime? @db.Date
+  data_fim     DateTime? @db.Date
+  cnpj         String?   @db.VarChar(14)
+  razao_social String?   @db.VarChar(75)
+  fantasia     String?   @db.VarChar(75)
+  telefone     String?   @db.VarChar(11)
+  celular      String?   @db.VarChar(11)
+  email        String?   @db.VarChar(128)
+  contato      String?   @db.VarChar(45)
+  apolice      String?   @db.VarChar(45)
+}
+
+model tabela_correcao {
+  ano       Int      @id
+  janeiro   Decimal? @db.Decimal(18, 6)
+  fevereiro Decimal? @db.Decimal(18, 6)
+  marco     Decimal? @db.Decimal(18, 6)
+  abril     Decimal? @db.Decimal(18, 6)
+  maio      Decimal? @db.Decimal(18, 6)
+  junho     Decimal? @db.Decimal(18, 6)
+  julho     Decimal? @db.Decimal(18, 6)
+  agosto    Decimal? @db.Decimal(18, 6)
+  setembro  Decimal? @db.Decimal(18, 6)
+  outubro   Decimal? @db.Decimal(18, 6)
+  novembro  Decimal? @db.Decimal(18, 6)
+  dezembro  Decimal? @db.Decimal(18, 6)
+}
+
+model tabelas_genericas_codigo {
+  id                     Int                    @id @default(autoincrement())
+  codigoReferencia       Int
+  descricao              String                 @db.VarChar(256)
+  codigo_rais            String?                @db.VarChar(45)
+  codigo_sefip           String?                @db.VarChar(45)
+  codigo_caged           String?                @db.VarChar(45)
+  codigo_esocial         String?                @db.VarChar(45)
+  tag                    String?                @db.VarChar(45)
+  tabelas_genericas_nome tabelas_genericas_nome @relation(fields: [codigoReferencia], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_nome")
+
+  @@index([codigoReferencia], map: "fk_nome_tabelas_idx")
+}
+
+model tabelas_genericas_nome {
+  id                       Int                        @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  nome                     String?                    @db.VarChar(128)
+  tabelas_genericas_codigo tabelas_genericas_codigo[]
+}
+
+model telas {
+  id     Int     @id @default(autoincrement())
+  nome   String? @unique(map: "nome_UNIQUE") @db.VarChar(75)
+  titulo String? @unique(map: "titulo_UNIQUE") @db.VarChar(75)
+}
+
+model tipo_unidade {
+  id           Int      @id @default(autoincrement())
+  predio       Int?
+  codigo       Int?
+  tipo_imovel  Int?
+  qp_indiv     Decimal? @db.Decimal(18, 6)
+  qp_geral     Decimal? @db.Decimal(18, 6)
+  qp_combinado Decimal? @db.Decimal(18, 6)
+  quantidade   Int?
+  descricao    String?  @db.VarChar(75)
+}
+
+model tipo_unidade_combinacao {
+  predio      Int
+  codigo      Int    @unique(map: "codigo_UNIQUE")
+  descricao   String @db.VarChar(128)
+  apartamento String @db.Char(1)
+  conjunto    String @db.Char(1)
+  sobreloja   String @db.Char(1)
+  garagem     String @db.Char(1)
+  loja        String @db.Char(1)
+  cobertura   String @db.Char(1)
+
+  @@id([apartamento, conjunto, sobreloja, garagem, loja, cobertura, predio])
+}
+
+model tipos_documentos {
+  id         Int     @id @default(autoincrement())
+  nome       String  @db.VarChar(45)
+  abreviacao String? @db.VarChar(10)
+  retencao   String? @default("N") @db.Char(1)
+  recibo     String? @db.Char(1)
+}
+
+model usuarios {
+  id            Int     @id @default(autoincrement())
+  usuario       String  @unique(map: "usuario_UNIQUE") @db.VarChar(45)
+  senha         String  @db.VarChar(45)
+  email         String? @db.VarChar(75)
+  ativo         String? @default("S") @db.Char(1)
+  granularidade Int?
+  nome          String? @db.VarChar(75)
+  grupo         Int?
+  celular       String? @db.VarChar(11)
+  master        String? @default("N") @db.Char(1)
+}
+
+model valores_cobranca {
+  id        Int                    @id @default(autoincrement())
+  predio    Int?
+  idMorador Int?
+  mes       Int?
+  ano       Int?
+  tipo      valores_cobranca_tipo?
+  valor     Decimal?               @db.Decimal(18, 2)
+  descricao String?                @db.VarChar(75)
+  idFundo   Int?
+}
+
+model valores_quilo_gas {
+  ano    Int
+  mes    Int
+  valor  Decimal? @db.Decimal(18, 2)
+  predio Int
+
+  @@id([ano, mes, predio])
+}
+
+model valores_tipo_unidade {
+  predio       Int
+  mes          Int
+  ano          Int
+  tipo_unidade Int
+  valor        Decimal? @db.Decimal(18, 2)
+
+  @@id([predio, ano, mes, tipo_unidade])
+}
+
+enum boletos_status {
+  PENDENTE
+  SUBSTITUIDO
+  PAGO
+  BAIXADO
+}
+
+enum controle_efdreinf_metodo {
+  inclusao
+  alteracao
+  exclusao
+}
+
+enum controle_efdreinf_ambiente {
+  Producao
+  ProducaoRestrita
+}
+
+enum controle_efdreinf_recibo_ambiente {
+  Producao
+  ProducaoRestrita
+}
+
+enum fornecedores_tributacao {
+  REAL
+  PRESUMIDO
+  IMUNE
+  ISENTO
+  SIMPLES
+  MEI
+}
+
+enum fundos_tipo_calculo {
+  PORCENTAGEM
+  FRACAO
+  VALOR
+}
+
+enum fundos_cobrarDe {
+  MORADOR
+  PROPRIETARIO
+}
+
+enum lancamentos_cpr_lancadoEm {
+  CPR
+  CONDO
+  AUTO_FUNDO @map("AUTO-FUNDO")
+  AUTO_DIF @map("AUTO-DIF")
+}
+
+enum lancamentos_cpr_tipo {
+  D
+  C
+}
+
+enum valores_cobranca_tipo {
+  AGUA
+  GAS
+  CONDOMINIO
+  DIRETA
+  FUNDO
+}
